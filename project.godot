@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="my-rts-game-godot"
-run/main_scene="uid://gy6jn0ha11nh"
+run/main_scene="uid://nropgwbwdv3p"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/image="res://assets/splashscreen1.gif"
+config/icon="uid://dpvld82rrho7x"
 
 [editor_plugins]
 
