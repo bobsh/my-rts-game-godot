@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="my-rts-game-godot"
+run/main_scene="uid://gy6jn0ha11nh"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/asdf/plugin.cfg", "res://addons/ldtk-importer/plugin.cfg")
 
 [rendering]
 
