@@ -16,6 +16,11 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/image="res://assets/splashscreen1.gif"
 config/icon="uid://dpvld82rrho7x"
 
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/asdf/plugin.cfg", "res://addons/ldtk-importer/plugin.cfg")
