@@ -13,7 +13,7 @@ config_version=5
 config/name="my-rts-game-godot"
 run/main_scene="uid://nropgwbwdv3p"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/image="res://assets/splashscreen1.gif"
+boot_splash/image="uid://cr64pxkxxm4m"
 config/icon="uid://dpvld82rrho7x"
 
 [editor]
