@@ -3,9 +3,9 @@ extends Camera2D
 var is_dragging = false
 var last_mouse_position = Vector2()
 
-var min_zoom = 0.25  # Maximum zoom in (larger view)
-var max_zoom = 3.0   # Maximum zoom out (smaller view)
-var zoom_speed = 0.1 # How quickly to zoom
+@export var min_zoom = 0.25  # Maximum zoom in (larger view)
+@export var max_zoom = 3.0   # Maximum zoom out (smaller view)
+@export var zoom_speed = 0.1 # How quickly to zoom
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -22,14 +22,14 @@ func _input(event):
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				# Zoom in - make zoom value larger
 				zoom = zoom + Vector2(zoom_speed, zoom_speed)
-				# Clamp to min zoom
-				zoom = Vector2(max(zoom.x, min_zoom), max(zoom.y, min_zoom))
+				# Clamp to max zoom (smaller value = more zoomed in)
+				zoom = Vector2(min(zoom.x, max_zoom), min(zoom.y, max_zoom))
 
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				# Zoom out - make zoom value smaller
 				zoom = zoom - Vector2(zoom_speed, zoom_speed)
-				# Clamp to max zoom
-				zoom = Vector2(min(zoom.x, max_zoom), min(zoom.y, max_zoom))
+				# Clamp to min zoom (prevent zooming out too far)
+				zoom = Vector2(max(zoom.x, min_zoom), max(zoom.y, min_zoom))
 
 	elif event is InputEventMouseMotion and is_dragging:
 		var delta = event.position - last_mouse_position
