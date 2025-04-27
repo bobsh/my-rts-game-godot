@@ -13,17 +13,8 @@ config_version=5
 config/name="my-rts-game-godot"
 run/main_scene="uid://nropgwbwdv3p"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-boot_splash/image="uid://cr64pxkxxm4m"
+boot_splash/image="uid://cinawt64abqbx"
 config/icon="uid://dpvld82rrho7x"
-
-[editor]
-
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/asdf/plugin.cfg", "res://addons/ldtk-importer/plugin.cfg")
 
 [rendering]
 
