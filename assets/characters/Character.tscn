@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo0t4cek2tv46"]
+
+[ext_resource type="Script" uid="uid://b5ryuv78j0e37" path="res://assets/maps/Character.gd" id="1_tnnry"]
+[ext_resource type="Texture2D" uid="uid://3ag873gmmf2y" path="res://assets/character1.png" id="2_lvgq6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gslqs"]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+disable_mode = 2
+input_pickable = true
+motion_mode = 1
+script = ExtResource("1_tnnry")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_lvgq6")
+offset = Vector2(32, 32)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, 32)
+scale = Vector2(3.2, 3.2)
+shape = SubResource("RectangleShape2D_gslqs")

@@ -16,6 +16,11 @@ config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/image="uid://cinawt64abqbx"
 config/icon="uid://dpvld82rrho7x"
 
+[display]
+
+window/size/mode=2
+mouse_cursor/custom_image="uid://c58d6jivgpgah"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

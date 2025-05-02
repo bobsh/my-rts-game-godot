@@ -2,12 +2,22 @@
 extends CharacterBody2D  # For 2D (use CharacterBody3D for 3D)
 
 @export var speed = 200.0
-var selected = false
+@export var selected = false
 var target_position = null
 var path = []
 
 # Optional - for pathfinding
 @onready var navigation_agent = $NavigationAgent2D
+
+func set_selected(value: bool):
+	selected = value
+
+func move_to(target: Vector2):
+	target_position = target
+
+@rpc("any_peer")
+func set_position_remote(pos: Vector2):
+	position = pos
 
 func _ready():
 	# If using NavigationAgent2D
@@ -15,10 +25,12 @@ func _ready():
 		navigation_agent.target_reached.connect(_on_target_reached)
 
 func _process(delta):
-	update_movement(delta)
-	update_visuals()
+	# if multiplayer.get_unique_id() != multiplayer.get_multiplayer_authority():
+	#	return # Only control your own player
 
-func update_movement(_delta):
+	# use this once 
+	# rpc_unreliable("set_position_remote", position)
+
 	if target_position:
 		if has_node("NavigationAgent2D"):
 			# NavigationAgent2D approach
@@ -40,22 +52,6 @@ func update_movement(_delta):
 			else:
 				target_position = null
 				velocity = Vector2.ZERO
-
-func update_visuals():
-	# Update visual feedback for selection
-	if has_node("SelectionIndicator"):
-		$SelectionIndicator.visible = selected
-
-func set_selected(is_selected):
-	selected = is_selected
-	update_visuals()
-
-func move_to(target):
-	target_position = target
-	
-	# If using NavigationAgent2D
-	if has_node("NavigationAgent2D"):
-		navigation_agent.set_target_position(target)
 
 func _on_target_reached():
 	target_position = null
