@@ -2,8 +2,11 @@ extends Node2D
 
 var selected_character = null
 
-
 func _ready():
+	spawn_ui()
+	spawn_character()
+
+func spawn_character():
 	push_warning("spawning the first character")
 	# Preload the Character scene
 	var CharacterScene = preload("res://assets/characters/Character.tscn")
@@ -16,6 +19,24 @@ func _ready():
 
 	# Add the character to the scene tree
 	add_child(character_instance)
+
+
+func spawn_ui():
+	push_warning("spawning the UI")
+	# Preload the UI scene
+	var UIScene = preload("res://assets/scenes/PlayerUI.tscn")
+
+	# Instance the scene
+	var ui_instance = UIScene.instantiate()
+
+	# Set position (change as needed)
+	ui_instance.visible = true
+
+	# Find the CanvasLayer node
+	var canvas_layer = get_node("CanvasLayer")
+
+	# Add the UI to the scene tree
+	canvas_layer.add_child(ui_instance)
 
 
 func _input(event):
