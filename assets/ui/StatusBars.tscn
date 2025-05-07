@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7ltgg51ni08h"]
+
+[ext_resource type="FontFile" uid="uid://dqqab3i04a6uf" path="res://assets/fonts/fira_sans/FiraSans-Bold.ttf" id="1_u23gb"]
+[ext_resource type="Texture2D" uid="uid://ckxhdbwemn6fy" path="res://assets/ui/progress_bars/progress_bar1_bg.png" id="2_20erv"]
+[ext_resource type="Texture2D" uid="uid://bgt365vnu8lto" path="res://assets/ui/progress_bars/progress_bar1_fill.png" id="3_pkdmb"]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HPBar" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TitleContainer" type="MarginContainer" parent="HPBar"]
+layout_mode = 2
+theme_override_constants/margin_right = 20
+
+[node name="Background" type="NinePatchRect" parent="HPBar/TitleContainer"]
+custom_minimum_size = Vector2(140, 40)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="HPBar/TitleContainer/Background"]
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 22.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_u23gb")
+theme_override_font_sizes/font_size = 24
+text = "HP"
+vertical_alignment = 1
+
+[node name="Gauge" type="TextureProgressBar" parent="HPBar"]
+layout_mode = 2
+value = 50.0
+texture_under = ExtResource("2_20erv")
+texture_progress = ExtResource("3_pkdmb")
+
+[node name="MarginContainer" type="MarginContainer" parent="HPBar/Gauge"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HPBar/Gauge/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CurrentValue" type="Label" parent="HPBar/Gauge/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_u23gb")
+theme_override_font_sizes/font_size = 24
+text = "50"
+vertical_alignment = 1
+
+[node name="Divider" type="Label" parent="HPBar/Gauge/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_u23gb")
+theme_override_font_sizes/font_size = 24
+text = "/"
+vertical_alignment = 1
+
+[node name="MaxValue" type="Label" parent="HPBar/Gauge/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_u23gb")
+theme_override_font_sizes/font_size = 24
+text = "100"
+vertical_alignment = 1

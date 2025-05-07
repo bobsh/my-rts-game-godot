@@ -24,7 +24,7 @@ func spawn_character():
 func spawn_ui():
 	push_warning("spawning the UI")
 	# Preload the UI scene
-	var UIScene = preload("res://assets/scenes/PlayerUI.tscn")
+	var UIScene = preload("res://assets/ui/PlayerUI.tscn")
 
 	# Instance the scene
 	var ui_instance = UIScene.instantiate()

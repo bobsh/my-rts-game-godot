@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://d2ag025c47lac"]
+
+[node name="Buttons" type="HFlowContainer"]
+
+[node name="Move" type="Button" parent="."]
+layout_mode = 2
+text = "Move"
+
+[node name="Attack" type="Button" parent="."]
+layout_mode = 2
+text = "Attack"
+
+[node name="Harvest" type="Button" parent="."]
+layout_mode = 2
+text = "Harvest"
+
+[node name="Build" type="Button" parent="."]
+layout_mode = 2
+text = "Build"
+
+[node name="Talk" type="Button" parent="."]
+layout_mode = 2
+text = "Talk"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "Sleep"

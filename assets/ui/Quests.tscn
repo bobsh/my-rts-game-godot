@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://c3t71w078lf3g"]
+
+[node name="Quests" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+split_offset = 300
+
+[node name="Panel" type="Panel" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Fetch quest"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Save the world
+"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="HSplitContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Meditate on the dohnut"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer"]
+layout_mode = 2
+split_offset = 50
+
+[node name="Panel" type="Panel" parent="HSplitContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/VSplitContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HSplitContainer/VSplitContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Open Map"
+
+[node name="Panel2" type="Panel" parent="HSplitContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VSplitContainer/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/VSplitContainer/Panel2/MarginContainer"]
+layout_mode = 2
+text = "The village of Dunhollow has long whispered tales of the Ember Sigil, a lost relic said to hold the dying fire of a forgotten god. After a series of strange omens—withered crops, trembling ground, and stars blinking out for moments at a time—the village seer tasks you with finding it. According to her visions, the sigil was entombed deep within the Ashroot Caverns centuries ago, sealed away by the ancient Pyrelords to prevent its misuse. But now, it is the only hope to restore balance.
+
+Your journey begins with a trek through the Emberfen, a sulfur-choked swamp crawling with fire-warped beasts and remnants of failed expeditions. Along the way, you’ll need to recover three Flame-Keystones held by reclusive fire cults, each guarding their piece in forgotten temples. These trials test not only your strength, but your ability to discern truth from fanaticism—some cultists believe you’re the prophesied Flamebearer, while others will die to stop you. Each key unlocks a deeper layer of the caverns, spiraling ever closer to the sigil.
+
+At last, in the heart of the earth, you find the sigil enshrined in a stone pyre, guarded by a crumbling avatar of the god whose power it once held. It challenges you not in combat, but with a question: why do you seek the flame? Your answer shapes the sigil’s awakening—restorative and warm, or consuming and wild. With the sigil in hand, you return to Dunhollow, but its glow has changed you. The villagers look on with awe... or fear."

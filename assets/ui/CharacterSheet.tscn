@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpli61vjylo7i"]
+
+[ext_resource type="Texture2D" uid="uid://3ag873gmmf2y" path="res://assets/characters/character1.png" id="1_bkr6k"]
+[ext_resource type="FontFile" uid="uid://dqqab3i04a6uf" path="res://assets/fonts/fira_sans/FiraSans-Bold.ttf" id="2_2rq3w"]
+[ext_resource type="Texture2D" uid="uid://dx6p4k2bard46" path="res://assets/ui/divider.png" id="3_fw02x"]
+[ext_resource type="PackedScene" uid="uid://c7ltgg51ni08h" path="res://assets/ui/StatusBars.tscn" id="4_qnyje"]
+[ext_resource type="PackedScene" uid="uid://d2ag025c47lac" path="res://assets/ui/ActionButtons.tscn" id="5_8jc3l"]
+
+[node name="CharacterSheet" type="Control"]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -652.0
+offset_bottom = -398.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -232.0
+offset_right = 232.0
+offset_bottom = 230.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/CenterContainer"]
+layout_mode = 2
+
+[node name="Character" type="VBoxContainer" parent="Panel/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CharacterImage" type="TextureRect" parent="Panel/CenterContainer/HBoxContainer/Character"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_bkr6k")
+stretch_mode = 2
+
+[node name="CharacterName" type="Label" parent="Panel/CenterContainer/HBoxContainer/Character"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_2rq3w")
+theme_override_font_sizes/font_size = 28
+text = "Frampton Stammer"
+horizontal_alignment = 1
+
+[node name="HR1" type="TextureRect" parent="Panel/CenterContainer/HBoxContainer/Character"]
+layout_mode = 2
+texture = ExtResource("3_fw02x")
+
+[node name="VBoxContainer" parent="Panel/CenterContainer/HBoxContainer/Character" instance=ExtResource("4_qnyje")]
+layout_mode = 2
+
+[node name="HR2" type="TextureRect" parent="Panel/CenterContainer/HBoxContainer/Character"]
+layout_mode = 2
+texture = ExtResource("3_fw02x")
+
+[node name="Buttons" parent="Panel/CenterContainer/HBoxContainer/Character" instance=ExtResource("5_8jc3l")]
+layout_mode = 2
