@@ -71,10 +71,16 @@ layout_mode = 2
 layout_mode = 2
 text = "Open Map"
 
-[node name="Panel2" type="Panel" parent="HSplitContainer/VSplitContainer"]
+[node name="TabContainer" type="TabContainer" parent="HSplitContainer/VSplitContainer"]
 layout_mode = 2
+current_tab = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VSplitContainer/Panel2"]
+[node name="Description" type="Panel" parent="HSplitContainer/VSplitContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VSplitContainer/TabContainer/Description"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -84,10 +90,29 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/VSplitContainer/Panel2/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/VSplitContainer/TabContainer/Description/MarginContainer"]
 layout_mode = 2
 text = "The village of Dunhollow has long whispered tales of the Ember Sigil, a lost relic said to hold the dying fire of a forgotten god. After a series of strange omens—withered crops, trembling ground, and stars blinking out for moments at a time—the village seer tasks you with finding it. According to her visions, the sigil was entombed deep within the Ashroot Caverns centuries ago, sealed away by the ancient Pyrelords to prevent its misuse. But now, it is the only hope to restore balance.
 
 Your journey begins with a trek through the Emberfen, a sulfur-choked swamp crawling with fire-warped beasts and remnants of failed expeditions. Along the way, you’ll need to recover three Flame-Keystones held by reclusive fire cults, each guarding their piece in forgotten temples. These trials test not only your strength, but your ability to discern truth from fanaticism—some cultists believe you’re the prophesied Flamebearer, while others will die to stop you. Each key unlocks a deeper layer of the caverns, spiraling ever closer to the sigil.
 
 At last, in the heart of the earth, you find the sigil enshrined in a stone pyre, guarded by a crumbling avatar of the god whose power it once held. It challenges you not in combat, but with a question: why do you seek the flame? Your answer shapes the sigil’s awakening—restorative and warm, or consuming and wild. With the sigil in hand, you return to Dunhollow, but its glow has changed you. The villagers look on with awe... or fear."
+
+[node name="Objectives" type="Panel" parent="HSplitContainer/VSplitContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VSplitContainer/TabContainer/Objectives"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/VSplitContainer/TabContainer/Objectives/MarginContainer"]
+layout_mode = 2
+text = "Objective 1
+Objective 2"
