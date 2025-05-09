@@ -22,9 +22,10 @@ jobs:
 
       - name: Download Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/4.5.dev3
+          mkdir -p ~/.local/share/godot/export_templates/
           curl -L -o templates.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_export_templates.tpz
-          unzip templates.zip -d ~/.local/share/godot/export_templates/4.5.dev3
+          unzip templates.zip -d .
+          mv templates ~/.local/share/godot/export_templates/4.5.dev3
           ls ~/.local/share/godot/export_templates/4.5.dev3
 
       - name: Export project
@@ -55,9 +56,10 @@ jobs:
 
       - name: Download Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/4.5.dev3
+          mkdir -p ~/.local/share/godot/export_templates/
           curl -L -o templates.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_export_templates.tpz
-          unzip templates.zip -d ~/.local/share/godot/export_templates/4.5.dev3
+          unzip templates.zip -d .
+          mv templates ~/.local/share/godot/export_templates/4.5.dev3
           ls ~/.local/share/godot/export_templates/4.5.dev3
 
       - name: Export project
@@ -88,9 +90,10 @@ jobs:
 
       - name: Download Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/4.5.dev3
+          mkdir -p ~/.local/share/godot/export_templates/
           curl -L -o templates.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_export_templates.tpz
-          unzip templates.zip -d ~/.local/share/godot/export_templates/4.5.dev3
+          unzip templates.zip -d .
+          mv templates ~/.local/share/godot/export_templates/4.5.dev3
           ls ~/.local/share/godot/export_templates/4.5.dev3
 
       - name: Export project
@@ -121,9 +124,10 @@ jobs:
 
       - name: Download Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/4.5.dev3
+          mkdir -p ~/.local/share/godot/export_templates/
           curl -L -o templates.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_export_templates.tpz
-          unzip templates.zip -d ~/.local/share/godot/export_templates/4.5.dev3
+          unzip templates.zip -d .
+          mv templates ~/.local/share/godot/export_templates/4.5.dev3
           ls ~/.local/share/godot/export_templates/4.5.dev3
 
       - name: Export project
