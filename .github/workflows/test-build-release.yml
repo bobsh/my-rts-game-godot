@@ -32,8 +32,11 @@ jobs:
 
       - name: Export project
         run: |
-          start /wait godot/Godot_v4.5-dev3_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe > export_log.txt 2>&1
-          type export_log.txt
+          godot/Godot_v4.5-dev3_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe
+          sleep 120
+        # run: |
+        #   start /wait godot/Godot_v4.5-dev3_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe > export_log.txt 2>&1
+        #   type export_log.txt
         # run: |
         #   start -Wait -FilePath 'godot/Godot_v4.5-dev3_win64.exe' -ArgumentList '--no-window --headless --verbose --export-release "Windows-x86_64" game.exe'
         shell: cmd
