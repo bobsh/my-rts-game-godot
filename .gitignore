@@ -1,1 +1,6 @@
+# This directory needs to be ignored by git because it contains
+# user local build, import and cache files.
 .godot
+
+# We ignore this so we can test our builds locally
+build/
