@@ -39,7 +39,7 @@ jobs:
         #   type export_log.txt
         # run: |
         #   start -Wait -FilePath 'godot/Godot_v4.5-dev3_win64.exe' -ArgumentList '--no-window --headless --verbose --export-release "Windows-x86_64" game.exe'
-        shell: cmd
+        # shell: cmd
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
