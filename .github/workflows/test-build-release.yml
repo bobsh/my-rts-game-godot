@@ -22,14 +22,14 @@ jobs:
 
       - name: Export project
         run: |
-          mkdir -p build/windows
-          godot/godot.exe --export "Windows Desktop" build/windows/game.exe
+          mkdir -p build/windows-x64_64
+          godot/godot.exe --export "Windows-x86_64" build/windows-x86_64/game.exe
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build
-          path: build/windows/game.exe
+          name: windows-build-x64_64
+          path: build/windows-x64_64/game.exe
 
   build-linux-x64_64:
     name: Build for Linux
@@ -47,14 +47,14 @@ jobs:
 
       - name: Export project
         run: |
-          mkdir -p build/linux
-          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Linux/X11" build/linux/game.x86_64
+          mkdir -p build/linux-x64_64
+          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Linux-x86_64" build/linux-x86_64/game.x86_64
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
         with:
-          name: linux-build
-          path: build/linux/game.x86_64
+          name: linux-build-x64_64
+          path: build/linux-x64_64/game.x86_64
 
   build-macos-x64_64:
     name: Build for macOS
@@ -72,14 +72,14 @@ jobs:
 
       - name: Export project
         run: |
-          mkdir -p build/macos
-          godot/Godot.app/Contents/MacOS/Godot --export-release "Mac OSX" build/macos/game.dmg
+          mkdir -p build/macos-x64_64
+          godot/Godot.app/Contents/MacOS/Godot --export-release "macOS-x86_64" build/macos-x86_64/game.dmg
 
       - name: Upload macOS build
         uses: actions/upload-artifact@v4
         with:
           name: macos-build
-          path: build/macos/game.dmg
+          path: build/macos-x64_64/game.dmg
 
   build-web:
     name: Build for Web
@@ -98,7 +98,7 @@ jobs:
       - name: Export project
         run: |
           mkdir -p build/web
-          godot/Godot_v4.5-dev3_linux.x86_64 --export-release "HTML5" build/web/
+          godot/Godot_v4.5-dev3_linux.x86_64 --export-release "Web" build/web/
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
@@ -130,8 +130,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release_windows.outputs.upload_url }}
-          asset_path: build/windows/game.exe
-          asset_name: game-windows.exe
+          asset_path: build/windows-x86_64/game.exe
+          asset_name: game-windows-x64_64.exe
           asset_content_type: application/octet-stream
 
   release-linux-x64_64:
@@ -158,8 +158,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release_linux.outputs.upload_url }}
-          asset_path: build/linux/game.x86_64
-          asset_name: game-linux.x86_64
+          asset_path: build/linux-x64_64/game.x86_64
+          asset_name: game-linux-x86_64.bin
           asset_content_type: application/octet-stream
 
   release-macos-x64_64:
@@ -186,8 +186,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release_macos.outputs.upload_url }}
-          asset_path: build/macos/game.dmg
-          asset_name: game-macos.dmg
+          asset_path: build/macos-x86_64/game.dmg
+          asset_name: game-macos-x64_64.dmg
           asset_content_type: application/octet-stream
 
   release-web:

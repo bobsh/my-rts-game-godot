@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Quest" load_steps=9 format=3 uid="uid://samplequest"]
 
-[ext_resource type="Script" uid="uid://bui1deh6bxtoa" path="res://quests/Objective.gd" id="1_8oaa0"]
+[ext_resource type="Script" uid="uid://bui1deh6bxtoa" path="res://quests/Objective.gd" id="1_jklxx"]
 [ext_resource type="Script" uid="uid://cd0jneubk2cse" path="res://quests/Quest.gd" id="2_5lpui"]
 [ext_resource type="Script" uid="uid://x2yx8gudd1um" path="res://quests/objectives/KillObjective.gd" id="2_se0pq"]
 [ext_resource type="Script" uid="uid://dcaw8jgsp0yym" path="res://quests/objectives/TalkObjective.gd" id="3_se0pq"]
@@ -37,10 +37,10 @@ script = ExtResource("2_5lpui")
 id = "quest_001"
 title = "The Relic's Tale"
 description = "Embark on a journey to retrieve a powerful relic, defeat a fearsome beast, and uncover the secrets of the past."
-objectives = [SubResource("Resource_fetch"), SubResource("Resource_kill"), SubResource("Resource_talk")]
+objectives = Array[ExtResource("1_jklxx")]([SubResource("Resource_fetch"), SubResource("Resource_kill"), SubResource("Resource_talk")])
 is_complete = false
 rewards = {
-    "gold": 100,
-    "items": ["Relic Shard"],
-    "xp": 500
+"gold": 100,
+"items": ["Relic Shard"],
+"xp": 500
 }
