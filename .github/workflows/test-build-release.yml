@@ -33,7 +33,7 @@ jobs:
       - name: Export project
         run: |
           mkdir -p build/
-          godot/godot.exe --export-release "Windows-x86_64" build/game.exe
+          godot/godot.exe --verbose --export-release "Windows-x86_64" build/game.exe
           ls build/
 
       - name: Upload Windows build
