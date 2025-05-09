@@ -147,7 +147,18 @@ jobs:
         run: |
           mkdir -p build/web
           godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Web" build/web/index
+
           tar -czf build/game-web.tar.gz -C build/web .
+
+      - name: Replace variables in exported HTML
+        run: |
+          sed -i 's/\$GODOT_PROJECT_NAME/my-rts-game-godot/g' build/web/index.html
+          sed -i 's/\$GODOT_SPLASH_COLOR/#242424/g' build/web/index.html
+          sed -i 's/\$GODOT_SPLASH_CLASSES/show-image--true fullsize--true use-filter--true/g' build/web/index.html
+          sed -i 's/\$GODOT_SPLASH/index.png/g' build/web/index.html
+          sed -i 's/\$GODOT_URL/index.js/g' build/web/index.html
+          sed -i 's/\$GODOT_CONFIG/{"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":15160112,"index.wasm":47811600},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"index.service.worker.js"}/g' build/web/index.html
+          sed -i 's/\$GODOT_THREADS_ENABLED/false/g' build/web/index.html
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
