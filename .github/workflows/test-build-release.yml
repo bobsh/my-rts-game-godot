@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  build-windows-x64_64:
-    name: Build for Windows
+  build-windows-x86_64:
+    name: Build for Windows x86_64
     runs-on: windows-latest
 
     steps:
@@ -31,15 +31,11 @@ jobs:
           ls ~/AppData/Roaming/Godot/export_templates/4.5.dev3
 
       - name: Export project
+        # The godot command runs in the background, so we need to wait for it to finish
+        # before proceeding to the next step.
         run: |
           godot/Godot_v4.5-dev3_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe
           sleep 120
-        # run: |
-        #   start /wait godot/Godot_v4.5-dev3_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe > export_log.txt 2>&1
-        #   type export_log.txt
-        # run: |
-        #   start -Wait -FilePath 'godot/Godot_v4.5-dev3_win64.exe' -ArgumentList '--no-window --headless --verbose --export-release "Windows-x86_64" game.exe'
-        # shell: cmd
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
@@ -47,8 +43,8 @@ jobs:
           name: windows-build-x64_64
           path: game.exe
 
-  build-linux-x64_64:
-    name: Build for Linux
+  build-linux-x86_64:
+    name: Build for Linux x86_64
     runs-on: ubuntu-latest
 
     steps:
@@ -70,21 +66,18 @@ jobs:
           curl -L -o templates.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_export_templates.tpz
           unzip templates.zip -d .
           mv templates ~/.local/share/godot/export_templates/4.5.dev3
-          ls ~/.local/share/godot/export_templates/4.5.dev3
 
       - name: Export project
         run: |
-          mkdir -p build
-          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Linux-x86_64" build/game.x86_64
-          ls build/
+          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Linux-x86_64" game.x86_64
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
         with:
           name: linux-build-x64_64
-          path: build/game.x86_64
+          path: game.x86_64
 
-  build-macos-x64_64:
+  build-macos:
     name: Build for macOS
     runs-on: macos-latest
 
@@ -111,16 +104,13 @@ jobs:
 
       - name: Export project
         run: |
-          find /Users/runner/Library/Application\ Support/Godot
-          mkdir -p build/
-          godot/Godot.app/Contents/MacOS/Godot --headless --export-release "macOS-x86_64" build/game.dmg
-          ls build/
+          godot/Godot.app/Contents/MacOS/Godot --headless --export-release "macOS-x86_64" game.dmg
 
       - name: Upload macOS build
         uses: actions/upload-artifact@v4
         with:
-          name: macos-build-x86_64
-          path: build/game.dmg
+          name: macos-build
+          path: game.dmg
 
   build-web:
     name: Build for Web
@@ -157,115 +147,3 @@ jobs:
         with:
           name: web-build
           path: build/game-web.tar.gz
-
-  release-windows-x64_64:
-    name: Release Windows Build
-    needs: build-windows-x64_64
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download Windows artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-build-x64_64
-
-      - name: Create GitHub Release (Windows)
-        id: create_release_windows
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Windows build to Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release_windows.outputs.upload_url }}
-          asset_path: build/game.exe
-          asset_name: game-windows-x64_64.exe
-          asset_content_type: application/octet-stream
-
-  release-linux-x64_64:
-    name: Release Linux Build
-    needs: build-linux-x64_64
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download Linux artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-build-x64_64
-
-      - name: Create GitHub Release (Linux)
-        id: create_release_linux
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Linux build to Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release_linux.outputs.upload_url }}
-          asset_path: build/game.x86_64
-          asset_name: game-linux-x86_64.bin
-          asset_content_type: application/octet-stream
-
-  release-macos-x64_64:
-    name: Release macOS Build
-    needs: build-macos-x64_64
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download macOS artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-build-x86_64
-
-      - name: Create GitHub Release (macOS)
-        id: create_release_macos
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload macOS build to Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release_macos.outputs.upload_url }}
-          asset_path: build/game.dmg
-          asset_name: game-macos-x64_64.dmg
-          asset_content_type: application/octet-stream
-
-  release-web:
-    name: Release Web Build
-    needs: build-web
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download Web artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: web-build
-
-      - name: Create GitHub Release (Web)
-        id: create_release_web
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Web build to Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release_web.outputs.upload_url }}
-          asset_path: build/web/
-          asset_name: game-web.zip
-          asset_content_type: application/zip
