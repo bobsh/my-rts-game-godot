@@ -1,6 +1,7 @@
 extends Resource
 class_name Objective
 
+@export var description: String
 @export var amount: int = 1
 @export var progress: int = 0
 @export var is_complete: bool = false

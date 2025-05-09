@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Quest" load_steps=12 format=3 uid="uid://cs0wifwq27np2"]
+[gd_resource type="Resource" script_class="Quest" load_steps=9 format=3 uid="uid://cs0wifwq27np2"]
 
 [ext_resource type="Script" uid="uid://bui1deh6bxtoa" path="res://quests/Objective.gd" id="1_8oaa0"]
 [ext_resource type="Script" uid="uid://cd0jneubk2cse" path="res://quests/Quest.gd" id="2_5lpui"]
@@ -7,55 +7,40 @@
 [ext_resource type="Script" uid="uid://dsb30gq7eneyf" path="res://quests/objectives/FetchObjective.gd" id="4_uk2yi"]
 
 [sub_resource type="Resource" id="Resource_uk2yi"]
-script = ExtResource("2_se0pq")
-name = "Mary"
-metadata/_custom_type_script = "uid://x2yx8gudd1um"
-
-[sub_resource type="Resource" id="Resource_8oaa0"]
-script = ExtResource("1_8oaa0")
-type = 0
-target = SubResource("Resource_uk2yi")
-amount = 1
-progress = 0
-is_complete = false
-metadata/_custom_type_script = "uid://bui1deh6bxtoa"
-
-[sub_resource type="Resource" id="Resource_gvceo"]
-script = ExtResource("3_se0pq")
-character = "Bob"
-keyword = "Plants"
-metadata/_custom_type_script = "uid://dcaw8jgsp0yym"
-
-[sub_resource type="Resource" id="Resource_lp2on"]
-script = ExtResource("1_8oaa0")
-type = 1
-target = SubResource("Resource_gvceo")
-amount = 1
-progress = 0
-is_complete = false
-metadata/_custom_type_script = "uid://bui1deh6bxtoa"
-
-[sub_resource type="Resource" id="Resource_ylt75"]
 script = ExtResource("4_uk2yi")
-item = "Screwdriver"
-give_to = "Harry"
+item = "Apple"
+give_to = "Grandma"
+description = "Go and get grandma a nice apple"
+amount = 1
+progress = 0
+is_complete = false
 metadata/_custom_type_script = "uid://dsb30gq7eneyf"
 
-[sub_resource type="Resource" id="Resource_se0pq"]
-script = ExtResource("1_8oaa0")
-type = 2
-target = SubResource("Resource_ylt75")
+[sub_resource type="Resource" id="Resource_gvceo"]
+script = ExtResource("2_se0pq")
+name = "Grandma"
+description = "Grandma chokes on the apple"
 amount = 1
 progress = 0
 is_complete = false
-metadata/_custom_type_script = "uid://bui1deh6bxtoa"
+metadata/_custom_type_script = "uid://x2yx8gudd1um"
+
+[sub_resource type="Resource" id="Resource_lp2on"]
+script = ExtResource("3_se0pq")
+character = "Bernie your imaginary friend"
+keyword = "grandma"
+description = "Now talk to the bernie about grandma"
+amount = 1
+progress = 0
+is_complete = false
+metadata/_custom_type_script = "uid://dcaw8jgsp0yym"
 
 [resource]
 script = ExtResource("2_5lpui")
 id = ""
 title = "Super duper quest"
 description = "My goddamn quest, ya gotta do it cos I said so!!!!"
-objectives = Array[ExtResource("1_8oaa0")]([SubResource("Resource_8oaa0"), SubResource("Resource_lp2on"), SubResource("Resource_se0pq")])
+objectives = Array[ExtResource("1_8oaa0")]([SubResource("Resource_uk2yi"), SubResource("Resource_gvceo"), SubResource("Resource_lp2on")])
 is_complete = false
 rewards = {
 "gold": 0,

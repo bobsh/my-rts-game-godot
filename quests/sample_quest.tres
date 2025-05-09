@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=9 format=3 uid="uid://samplequest"]
+
+[ext_resource type="Script" uid="uid://bui1deh6bxtoa" path="res://quests/Objective.gd" id="1_8oaa0"]
+[ext_resource type="Script" uid="uid://cd0jneubk2cse" path="res://quests/Quest.gd" id="2_5lpui"]
+[ext_resource type="Script" uid="uid://x2yx8gudd1um" path="res://quests/objectives/KillObjective.gd" id="2_se0pq"]
+[ext_resource type="Script" uid="uid://dcaw8jgsp0yym" path="res://quests/objectives/TalkObjective.gd" id="3_se0pq"]
+[ext_resource type="Script" uid="uid://dsb30gq7eneyf" path="res://quests/objectives/FetchObjective.gd" id="4_uk2yi"]
+
+[sub_resource type="Resource" id="Resource_fetch"]
+script = ExtResource("4_uk2yi")
+item = "Ancient Relic"
+give_to = "The Village Elder"
+description = "Retrieve the Ancient Relic from the Forbidden Cave and deliver it to the Village Elder. Beware of the lurking shadows."
+amount = 1
+progress = 0
+is_complete = false
+
+[sub_resource type="Resource" id="Resource_kill"]
+script = ExtResource("2_se0pq")
+name = "Shadow Beast"
+description = "Defeat the Shadow Beast that guards the Ancient Relic. Its roar shakes the very ground you stand on."
+amount = 1
+progress = 0
+is_complete = false
+
+[sub_resource type="Resource" id="Resource_talk"]
+script = ExtResource("3_se0pq")
+character = "Village Elder"
+keyword = "Relic"
+description = "Speak to the Village Elder about the significance of the Ancient Relic and its role in the village's history."
+amount = 1
+progress = 0
+is_complete = false
+
+[resource]
+script = ExtResource("2_5lpui")
+id = "quest_001"
+title = "The Relic's Tale"
+description = "Embark on a journey to retrieve a powerful relic, defeat a fearsome beast, and uncover the secrets of the past."
+objectives = [SubResource("Resource_fetch"), SubResource("Resource_kill"), SubResource("Resource_talk")]
+is_complete = false
+rewards = {
+    "gold": 100,
+    "items": ["Relic Shard"],
+    "xp": 500
+}
