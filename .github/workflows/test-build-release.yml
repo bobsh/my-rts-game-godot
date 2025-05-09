@@ -53,7 +53,6 @@ jobs:
         with:
           lfs: true
 
-
       - name: Download Godot
         run: |
           curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_linux.x86_64.zip
@@ -141,6 +140,14 @@ jobs:
           mkdir -p build/web
           godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Web" build/web/index
           tar -czf build/game-web.tar.gz -C build/web .
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: build/web
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
