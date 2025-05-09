@@ -177,7 +177,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release_windows.outputs.upload_url }}
-          asset_path: build/windows-x86_64/game.exe
+          asset_path: build/game.exe
           asset_name: game-windows-x64_64.exe
           asset_content_type: application/octet-stream
 
@@ -205,7 +205,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release_linux.outputs.upload_url }}
-          asset_path: build/linux-x64_64/game.x86_64
+          asset_path: build/game.x86_64
           asset_name: game-linux-x86_64.bin
           asset_content_type: application/octet-stream
 
@@ -233,7 +233,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release_macos.outputs.upload_url }}
-          asset_path: build/macos-x86_64/game.dmg
+          asset_path: build/game.dmg
           asset_name: game-macos-x64_64.dmg
           asset_content_type: application/octet-stream
 
