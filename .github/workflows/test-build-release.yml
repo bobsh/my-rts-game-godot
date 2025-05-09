@@ -20,7 +20,6 @@ jobs:
         run: |
           curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_win64.exe.zip
           unzip godot.zip -d godot
-          mv godot/Godot_v4.5-dev3_win64.exe godot/godot.exe
           ls godot
 
       - name: Download Export Templates
@@ -33,15 +32,13 @@ jobs:
 
       - name: Export project
         run: |
-          mkdir -p build/
-          godot/godot.exe --headless --verbose --export-release "Windows-x86_64" build/game.exe
-          ls build/
+          godot/Godot_v4.5-dev3_win64.exe --headless --verbose --export-release "Windows-x86_64" game.exe
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
         with:
           name: windows-build-x64_64
-          path: build/game.exe
+          path: game.exe
 
   build-linux-x64_64:
     name: Build for Linux
