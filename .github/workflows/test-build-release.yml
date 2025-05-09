@@ -217,7 +217,7 @@ jobs:
       - name: Download macOS artifact
         uses: actions/download-artifact@v4
         with:
-          name: macos-build-x64_64
+          name: macos-build-x86_64
 
       - name: Create GitHub Release (macOS)
         id: create_release_macos
