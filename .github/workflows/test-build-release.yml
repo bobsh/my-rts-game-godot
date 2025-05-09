@@ -33,7 +33,7 @@ jobs:
       - name: Export project
         run: |
           mkdir -p build/
-          godot/godot.exe --verbose --export-release "Windows-x86_64" build/game.exe
+          godot/godot.exe --headless --verbose --export-release "Windows-x86_64" build/game.exe
           ls build/
 
       - name: Upload Windows build
@@ -108,7 +108,7 @@ jobs:
         run: |
           find /Users/runner/Library/Application\ Support/Godot
           mkdir -p build/
-          godot/Godot.app/Contents/MacOS/Godot --export-release "macOS-x86_64" build/game.dmg
+          godot/Godot.app/Contents/MacOS/Godot --headless --export-release "macOS-x86_64" build/game.dmg
           ls build/
 
       - name: Upload macOS build
