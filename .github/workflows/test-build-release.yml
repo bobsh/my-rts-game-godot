@@ -21,7 +21,7 @@ jobs:
           curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_win64.exe.zip
           unzip godot.zip -d godot
           mv godot/Godot_v4.5-dev3_win64.exe godot/godot.exe
-          find godot
+          ls godot
 
       - name: Download Export Templates
         run: |
