@@ -97,6 +97,7 @@ jobs:
 
       - name: Download Export Templates
         run: |
+          ls -d ~
           mkdir -p "~/Library/Application Support/Godot/export_templates/"
           curl -L -o templates.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_export_templates.tpz
           unzip templates.zip -d .
@@ -105,7 +106,7 @@ jobs:
 
       - name: Export project
         run: |
-          find /Users/runner
+          find /Users/runner/Library/Application\ Support
           mkdir -p build/
           godot/Godot.app/Contents/MacOS/Godot --export-release "macOS-x86_64" build/game.dmg
           ls build/
