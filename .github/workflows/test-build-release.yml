@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-windows:
+  build-windows-x64_64:
     name: Build for Windows
     runs-on: windows-latest
 
@@ -16,7 +16,7 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_win64.exe.zip
+          curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_win64.exe.zip
           unzip godot.zip -d godot
           mv godot/Godot_v4.4.1-stable_win64.exe godot/godot.exe
 
@@ -31,7 +31,7 @@ jobs:
           name: windows-build
           path: build/windows/game.exe
 
-  build-linux:
+  build-linux-x64_64:
     name: Build for Linux
     runs-on: ubuntu-latest
 
@@ -41,14 +41,14 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+          curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_linux.x86_64.zip
           unzip godot.zip -d godot
           chmod +x godot/Godot_v4.4.1-stable_linux.x86_64
 
       - name: Export project
         run: |
           mkdir -p build/linux
-          godot/Godot_v4.4.1-stable_linux.x86_64 --export-release "Linux/X11" build/linux/game.x86_64
+          godot/Godot_v4.4.1-stable_linux.x86_64 --headless --export-release "Linux/X11" build/linux/game.x86_64
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
@@ -56,7 +56,7 @@ jobs:
           name: linux-build
           path: build/linux/game.x86_64
 
-  build-macos:
+  build-macos-x64_64:
     name: Build for macOS
     runs-on: macos-latest
 
@@ -66,7 +66,7 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_macos.universal.zip
+          curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_macos.universal.zip
           unzip godot.zip -d godot
           chmod +x godot/Godot.app/Contents/MacOS/Godot
 
@@ -106,9 +106,9 @@ jobs:
           name: web-build
           path: build/web/
 
-  release-windows:
+  release-windows-x64_64:
     name: Release Windows Build
-    needs: build-windows
+    needs: build-windows-x64_64
     runs-on: ubuntu-latest
 
     steps:
@@ -134,9 +134,9 @@ jobs:
           asset_name: game-windows.exe
           asset_content_type: application/octet-stream
 
-  release-linux:
+  release-linux-x64_64:
     name: Release Linux Build
-    needs: build-linux
+    needs: build-linux-x64_64
     runs-on: ubuntu-latest
 
     steps:
@@ -162,9 +162,9 @@ jobs:
           asset_name: game-linux.x86_64
           asset_content_type: application/octet-stream
 
-  release-macos:
+  release-macos-x64_64:
     name: Release macOS Build
-    needs: build-macos
+    needs: build-macos-x64_64
     runs-on: ubuntu-latest
 
     steps:
