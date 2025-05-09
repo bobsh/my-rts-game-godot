@@ -98,7 +98,7 @@ jobs:
       - name: Export project
         run: |
           mkdir -p build/web
-          godot/Godot_v4.5-dev3_linux.x86_64 --export-release "Web" build/web/
+          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Web" build/web/
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
@@ -113,7 +113,7 @@ jobs:
 
     steps:
       - name: Download Windows artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: windows-build
 
