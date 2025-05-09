@@ -104,7 +104,7 @@ jobs:
 
       - name: Export project
         run: |
-          godot/Godot.app/Contents/MacOS/Godot --headless --export-release "macOS-x86_64" game.dmg
+          godot/Godot.app/Contents/MacOS/Godot --headless --export-release "macOS" game.dmg
 
       - name: Upload macOS build
         uses: actions/upload-artifact@v4
