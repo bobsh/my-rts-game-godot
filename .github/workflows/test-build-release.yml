@@ -1,0 +1,116 @@
+name: Build and Release Godot Game
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build for all platforms
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Godot
+        uses: firebelley/godot-export@v5.2.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_export_templates.tpz
+          relative_project_path: ./
+
+      - name: Export for Windows
+        run: |
+          mkdir -p build/windows
+          godot-headless --export "Windows Desktop" build/windows/game.exe
+
+      - name: Export for Linux
+        run: |
+          mkdir -p build/linux
+          godot-headless --export "Linux/X11" build/linux/game.x86_64
+
+      - name: Export for macOS
+        run: |
+          mkdir -p build/macos
+          godot-headless --export "Mac OSX" build/macos/game.dmg
+
+      - name: Export for Web
+        run: |
+          mkdir -p build/web
+          godot-headless --export "HTML5" build/web/
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: build/windows/game.exe
+
+      - name: Upload Linux build
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-build
+          path: build/linux/game.x86_64
+
+      - name: Upload macOS build
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-build
+          path: build/macos/game.dmg
+
+      - name: Upload Web build
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: build/web/
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Windows build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/windows/game.exe
+          asset_name: game-windows.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload Linux build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/linux/game.x86_64
+          asset_name: game-linux.x86_64
+          asset_content_type: application/octet-stream
+
+      - name: Upload macOS build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/macos/game.dmg
+          asset_name: game-macos.dmg
+          asset_content_type: application/octet-stream
+
+      - name: Upload Web build to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/web/
+          asset_name: game-web.zip
+          asset_content_type: application/zip
