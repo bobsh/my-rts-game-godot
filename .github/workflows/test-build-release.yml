@@ -105,7 +105,7 @@ jobs:
 
       - name: Export project
         run: |
-          ls /Users/runner/Library/Application\ Support/Godot/export_templates/4.5.dev3
+          find /Users/runner
           mkdir -p build/
           godot/Godot.app/Contents/MacOS/Godot --export-release "macOS-x86_64" build/game.dmg
           ls build/
@@ -162,7 +162,7 @@ jobs:
       - name: Download Windows artifact
         uses: actions/download-artifact@v4
         with:
-          name: windows-build
+          name: windows-build-x64_64
 
       - name: Create GitHub Release (Windows)
         id: create_release_windows
@@ -190,7 +190,7 @@ jobs:
       - name: Download Linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: linux-build
+          name: linux-build-x64_64
 
       - name: Create GitHub Release (Linux)
         id: create_release_linux
@@ -218,7 +218,7 @@ jobs:
       - name: Download macOS artifact
         uses: actions/download-artifact@v4
         with:
-          name: macos-build
+          name: macos-build-x64_64
 
       - name: Create GitHub Release (macOS)
         id: create_release_macos
