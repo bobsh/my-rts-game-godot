@@ -48,7 +48,7 @@ jobs:
       - name: Export project
         run: |
           mkdir -p build/linux
-          godot/Godot_v4.4.1-stable_linux.x86_64 --export "Linux/X11" build/linux/game.x86_64
+          godot/Godot_v4.4.1-stable_linux.x86_64 --export-release "Linux/X11" build/linux/game.x86_64
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
@@ -68,12 +68,12 @@ jobs:
         run: |
           curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_macos.universal.zip
           unzip godot.zip -d godot
-          chmod +x godot/Godot_v4.4.1-stable_macos.universal
+          chmod +x godot/Godot.app/Contents/MacOS/Godot
 
       - name: Export project
         run: |
           mkdir -p build/macos
-          godot/Godot_v4.4.1-stable_macos.universal --export "Mac OSX" build/macos/game.dmg
+          godot/Godot.app/Contents/MacOS/Godot --export-release "Mac OSX" build/macos/game.dmg
 
       - name: Upload macOS build
         uses: actions/upload-artifact@v4
@@ -98,7 +98,7 @@ jobs:
       - name: Export project
         run: |
           mkdir -p build/web
-          godot/Godot_v4.4.1-stable_linux.x86_64 --export "HTML5" build/web/
+          godot/Godot_v4.4.1-stable_linux.x86_64 --export-release "HTML5" build/web/
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
@@ -141,7 +141,7 @@ jobs:
 
     steps:
       - name: Download Linux artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: linux-build
 
@@ -169,7 +169,7 @@ jobs:
 
     steps:
       - name: Download macOS artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: macos-build
 
@@ -197,7 +197,7 @@ jobs:
 
     steps:
       - name: Download Web artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web-build
 
