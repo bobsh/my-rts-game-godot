@@ -114,7 +114,7 @@ jobs:
       - name: Upload macOS build
         uses: actions/upload-artifact@v4
         with:
-          name: macos-build
+          name: macos-build-x86_64
           path: build/game.dmg
 
   build-web:
@@ -143,14 +143,14 @@ jobs:
 
       - name: Export project
         run: |
-          mkdir -p build/web
-          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Web" build/web/
+          mkdir -p build/
+          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Web" build/web
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: build/web/
+          path: build/web
 
   release-windows-x64_64:
     name: Release Windows Build
