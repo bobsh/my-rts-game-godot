@@ -18,7 +18,7 @@ jobs:
         run: |
           curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_win64.exe.zip
           unzip godot.zip -d godot
-          mv godot/Godot_v4.4.1-stable_win64.exe godot/godot.exe
+          mv godot/Godot_v4.5-dev3_win64.exe godot/godot.exe
 
       - name: Export project
         run: |
@@ -43,12 +43,12 @@ jobs:
         run: |
           curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_linux.x86_64.zip
           unzip godot.zip -d godot
-          chmod +x godot/Godot_v4.4.1-stable_linux.x86_64
+          chmod +x godot/Godot_v4.5-dev3_linux.x86_64
 
       - name: Export project
         run: |
           mkdir -p build/linux
-          godot/Godot_v4.4.1-stable_linux.x86_64 --headless --export-release "Linux/X11" build/linux/game.x86_64
+          godot/Godot_v4.5-dev3_linux.x86_64 --headless --export-release "Linux/X11" build/linux/game.x86_64
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
@@ -91,14 +91,14 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+          curl -L -o godot.zip https://github.com/godotengine/godot-builds/releases/download/4.5-dev3/Godot_v4.5-dev3_linux.x86_64.zip
           unzip godot.zip -d godot
-          chmod +x godot/Godot_v4.4.1-stable_linux.x86_64
+          chmod +x godot/Godot_v4.5-dev3_linux.x86_64
 
       - name: Export project
         run: |
           mkdir -p build/web
-          godot/Godot_v4.4.1-stable_linux.x86_64 --export-release "HTML5" build/web/
+          godot/v4.5-dev3_linux.x86_64 --export-release "HTML5" build/web/
 
       - name: Upload Web build
         uses: actions/upload-artifact@v4
