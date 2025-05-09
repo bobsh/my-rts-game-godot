@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bui1deh6bxtoa" path="res://quests/Objective.gd" id="1_8oaa0"]
 [ext_resource type="Script" uid="uid://cd0jneubk2cse" path="res://quests/Quest.gd" id="2_5lpui"]
-[ext_resource type="Script" uid="uid://x2yx8gudd1um" path="res://quests/KillTarget.gd" id="2_se0pq"]
-[ext_resource type="Script" uid="uid://dcaw8jgsp0yym" path="res://quests/TalkTarget.gd" id="3_se0pq"]
-[ext_resource type="Script" uid="uid://dsb30gq7eneyf" path="res://quests/FetchTarget.gd" id="4_uk2yi"]
+[ext_resource type="Script" uid="uid://x2yx8gudd1um" path="res://quests/objectives/KillObjective.gd" id="2_se0pq"]
+[ext_resource type="Script" uid="uid://dcaw8jgsp0yym" path="res://quests/objectives/TalkObjective.gd" id="3_se0pq"]
+[ext_resource type="Script" uid="uid://dsb30gq7eneyf" path="res://quests/objectives/FetchObjective.gd" id="4_uk2yi"]
 
 [sub_resource type="Resource" id="Resource_uk2yi"]
 script = ExtResource("2_se0pq")
