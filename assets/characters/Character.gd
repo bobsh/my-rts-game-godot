@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 signal start_moving
-signal target_reached
 signal character_selected
 signal character_deselected
 
@@ -11,7 +10,6 @@ signal character_deselected
 @export var max_health = 100
 @export var health = 100
 @export var selected = false
-var target_position = null
 var path = []
 
 @onready var navigation_agent = $NavigationAgent2D
@@ -27,42 +25,22 @@ func set_selected(value: bool):
 
 # Move the character to a target position
 func move_to(target: Vector2):
-	target_position = target
+	push_warning("move", target)
+	navigation_agent.target_position = target
 	emit_signal("start_moving")
 
 # Called when ready
 func _ready():
-	# A callback for when the navigation agent reaches the target
-	navigation_agent.target_reached.connect(_on_target_reached)
+	await get_tree().physics_frame
 
-# Called when the navigation target is reached
-func _on_target_reached():
-	target_position = null
-	velocity = Vector2.ZERO
-	emit_signal("target_reached")
+func _physics_process(_delta):
+	if navigation_agent.is_navigation_finished():
+		return
 
-func _process(_delta):
-	if target_position:
-		if has_node("NavigationAgent2D"):
-			# NavigationAgent2D approach
-			if navigation_agent.is_navigation_finished():
-				return
-
-			var next_position = navigation_agent.get_next_path_position()
-			var direction = global_position.direction_to(next_position)
-			velocity = direction * speed
-			move_and_slide()
-		else:
-			# Simple direct movement approach
-			var direction = global_position.direction_to(target_position)
-			var distance = global_position.distance_to(target_position)
-
-			if distance > 5: # Stop when close enough
-				velocity = direction * speed
-				move_and_slide()
-			else:
-				target_position = null
-				velocity = Vector2.ZERO
+	var next_position = navigation_agent.get_next_path_position()
+	var direction = global_position.direction_to(next_position)
+	velocity = direction * speed
+	move_and_slide()
 
 func update_gui_info():
 	# Update the GUI with character information
