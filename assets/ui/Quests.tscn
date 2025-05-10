@@ -73,10 +73,9 @@ text = "Open Map"
 
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/VSplitContainer"]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Description" type="Panel" parent="HSplitContainer/VSplitContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -99,6 +98,7 @@ Your journey begins with a trek through the Emberfen, a sulfur-choked swamp craw
 At last, in the heart of the earth, you find the sigil enshrined in a stone pyre, guarded by a crumbling avatar of the god whose power it once held. It challenges you not in combat, but with a question: why do you seek the flame? Your answer shapes the sigil’s awakening—restorative and warm, or consuming and wild. With the sigil in hand, you return to Dunhollow, but its glow has changed you. The villagers look on with awe... or fear."
 
 [node name="Objectives" type="Panel" parent="HSplitContainer/VSplitContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
