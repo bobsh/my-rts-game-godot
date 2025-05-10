@@ -1,5 +1,4 @@
-# Character
-extends CharacterBody2D # For 2D (use CharacterBody3D for 3D)
+extends CharacterBody2D
 
 signal start_moving
 signal target_reached
@@ -15,7 +14,6 @@ signal character_deselected
 var target_position = null
 var path = []
 
-# Optional - for pathfinding
 @onready var navigation_agent = $NavigationAgent2D
 
 # Set value true to select the character
@@ -32,10 +30,6 @@ func move_to(target: Vector2):
 	target_position = target
 	emit_signal("start_moving")
 
-@rpc("any_peer")
-func set_position_remote(pos: Vector2):
-	position = pos
-
 # Called when ready
 func _ready():
 	# A callback for when the navigation agent reaches the target
@@ -48,10 +42,6 @@ func _on_target_reached():
 	emit_signal("target_reached")
 
 func _process(_delta):
-	# if multiplayer.get_unique_id() != multiplayer.get_multiplayer_authority():
-	#	return # Only control your own player
-	# use this once
-	# rpc_unreliable("set_position_remote", position)
 	if target_position:
 		if has_node("NavigationAgent2D"):
 			# NavigationAgent2D approach
