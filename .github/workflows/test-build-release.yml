@@ -36,23 +36,23 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip {{ env.GODOT_WINDOWS_URL }}
+          curl -L -o godot.zip ${{ env.GODOT_WINDOWS_URL }}
           unzip godot.zip -d godot
           ls godot
 
       - name: Download Export Templates
         run: |
           mkdir -p ~/AppData/Roaming/Godot/export_templates/
-          curl -L -o templates.zip {{ env.GODOT_TEMPLATES_URL }}
+          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
           unzip templates.zip -d .
-          mv templates ~/AppData/Roaming/Godot/export_templates/{{ env.GODOT_VERSION_ALT }}
-          ls ~/AppData/Roaming/Godot/export_templates/{{ env.GODOT_VERSION_ALT }}
+          mv templates ~/AppData/Roaming/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}
+          ls ~/AppData/Roaming/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}
 
       - name: Export project
         # The godot command runs in the background, so we need to wait for it to finish
         # before proceeding to the next step.
         run: |
-          godot/Godot_v{{ env.GODOT_VERSION }}_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe
+          godot/Godot_v${{ env.GODOT_VERSION }}_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe
           sleep 120
 
       - name: Upload Windows build
@@ -73,20 +73,20 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip {{ env.GODOT_LINUX_URL }}
+          curl -L -o godot.zip ${{ env.GODOT_LINUX_URL }}
           unzip godot.zip -d godot
-          chmod +x godot/Godot_v{{ env.GODOT_VERSION }}_linux.x86_64
+          chmod +x godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64
 
       - name: Download Export Templates
         run: |
           mkdir -p ~/.local/share/godot/export_templates/
-          curl -L -o templates.zip {{ env.GODOT_TEMPLATES_URL }}
+          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
           unzip templates.zip -d .
-          mv templates ~/.local/share/godot/export_templates/{{ env.GODOT_VERSION_ALT }}
+          mv templates ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
 
       - name: Export project
         run: |
-          godot/Godot_v{{ env.GODOT_VERSION }}_linux.x86_64 --headless --export-release "Linux-x86_64" game.x86_64
+          godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64 --headless --export-release "Linux-x86_64" game.x86_64
 
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
@@ -106,7 +106,7 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip {{ env.GODOT_MACOS_URL }}
+          curl -L -o godot.zip ${{ env.GODOT_MACOS_URL }}
           unzip godot.zip -d godot
           chmod +x godot/Godot.app/Contents/MacOS/Godot
 
@@ -114,10 +114,10 @@ jobs:
         run: |
           ls -d ~
           mkdir -p "/Users/runner/Library/Application Support/Godot/export_templates/"
-          curl -L -o templates.zip {{ env.GODOT_TEMPLATES_URL }}
+          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
           unzip templates.zip -d .
-          mv templates "/Users/runner/Library/Application Support/Godot/export_templates/{{ env.GODOT_VERSION_ALT }}"
-          ls "/Users/runner/Library/Application Support/Godot/export_templates/{{ env.GODOT_VERSION_ALT }}"
+          mv templates "/Users/runner/Library/Application Support/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}"
+          ls "/Users/runner/Library/Application Support/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}"
 
       - name: Export project
         run: |
@@ -141,22 +141,22 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip {{ env.GODOT_LINUX_URL }}
+          curl -L -o godot.zip ${{ env.GODOT_LINUX_URL }}
           unzip godot.zip -d godot
-          chmod +x godot/Godot_v{{ env.GODOT_VERSION }}_linux.x86_64
+          chmod +x godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64
 
       - name: Download Export Templates
         run: |
           mkdir -p ~/.local/share/godot/export_templates/
-          curl -L -o templates.zip {{{ env.GODOT_TEMPLATES_URL }}}
+          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
           unzip templates.zip -d .
-          mv templates ~/.local/share/godot/export_templates/{{ env.GODOT_VERSION_ALT }}
-          ls ~/.local/share/godot/export_templates/{{ env.GODOT_VERSION_ALT }}
+          mv templates ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
+          ls ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
 
       - name: Export project
         run: |
           mkdir -p build/web
-          godot/Godot_v{{ env.GODOT_VERSION }}_linux.x86_64 --headless --export-release "Web" build/web/index
+          godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64 --headless --export-release "Web" build/web/index
 
       - name: Replace variables in exported HTML
         run: |
