@@ -1978,6 +1978,7 @@ terrain_set_0/terrain_4/name = "Wall"
 terrain_set_0/terrain_4/color = Color(0.139449, 0.500382, 0.46238, 1)
 terrain_set_0/terrain_5/name = "Forest"
 terrain_set_0/terrain_5/color = Color(0.747271, 0.14686, 0.474447, 1)
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_ipa10")
 sources/1 = SubResource("TileSetAtlasSource_oxru3")
 sources/3 = SubResource("TileSetAtlasSource_jedny")

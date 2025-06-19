@@ -18,6 +18,7 @@ offset = Vector2(32, 32)
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(32, 32)
 scale = Vector2(3.2, 3.2)
 shape = SubResource("RectangleShape2D_gslqs")

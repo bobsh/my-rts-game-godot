@@ -31,6 +31,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 
 [node name="GameMenu" parent="MarginContainer" instance=ExtResource("3_2qpv2")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

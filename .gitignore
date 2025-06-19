@@ -4,3 +4,6 @@
 
 # We ignore this so we can test our builds locally
 build/
+
+# Ignore vscode settings
+.vscode/
