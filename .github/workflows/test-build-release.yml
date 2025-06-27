@@ -35,7 +35,7 @@ jobs:
 
           - platform: Linux-x86_64
             os: ubuntu-latest
-            godot_binary_suffix: "_linux.x86_64"
+            godot_binary: "_linux.x86_64"
             godot_archive_suffix: "_linux.x86_64.zip"
             template_path: "${HOME}/.local/share/godot/export_templates/"
             export_name: game.x86_64
@@ -45,7 +45,7 @@ jobs:
 
           - platform: macOS
             os: macos-latest
-            godot_binary_suffix: ".app/Contents/MacOS/Godot"
+            godot_binary: "Godot.app/Contents/MacOS/Godot"
             godot_archive_suffix: "_macos.universal.zip"
             template_path: "/Users/runner/Library/Application Support/Godot/export_templates/"
             export_name: game.dmg
@@ -59,43 +59,39 @@ jobs:
         with:
           lfs: true
 
+      - name: Cache Godot and Templates
+        uses: actions/cache@v4
+        with:
+          path: |
+            godot
+            ${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}
+          key: ${{ matrix.platform }}-godot-${{ env.GODOT_VERSION }}
+
       - name: Download Godot
         shell: bash
         run: |
-          GODOT_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}${{ matrix.godot_archive_suffix }}"
-          curl -L -o godot.zip "$GODOT_URL"
-          unzip godot.zip -d godot
-          ls godot
-
-      - name: Make Godot executable
-        if: runner.os != 'Windows'
-        shell: bash
-        run: |
-          if [[ "${{ matrix.platform }}" == "macOS" ]]; then
-            chmod +x godot/Godot${{ matrix.godot_binary_suffix }}
-          else
-            chmod +x godot/Godot_v${{ env.GODOT_VERSION }}${{ matrix.godot_binary_suffix }}
+          GODOT_BINARY="Godot_v${GODOT_VERSION}${{ matrix.godot_binary_suffix }}"
+          if [ ! -f "godot/$GODOT_BINARY" ]; then
+            curl -L -o godot.zip "${GODOT_BASE_URL}/${GODOT_VERSION}/Godot_v${GODOT_VERSION}${{ matrix.godot_archive_suffix }}"
+            unzip godot.zip -d godot
           fi
+          chmod +x godot/$GODOT_BINARY || true
 
       - name: Download Export Templates
         shell: bash
         run: |
-          mkdir -p "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
-          TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
-          curl -L -o templates.zip "$TEMPLATES_URL"
-          unzip templates.zip -d .
-          mv templates/* "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}/"
-          ls "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}/"
+          TEMPLATE_DIR="${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
+          if [ ! -d "$TEMPLATE_DIR" ]; then
+            mkdir -p "$TEMPLATE_DIR"
+            curl -L -o templates.zip "${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
+            unzip templates.zip -d .
+            mv templates/* "$TEMPLATE_DIR/"
+          fi
 
       - name: Export project
         shell: bash
         run: |
-          if [[ "${{ matrix.platform }}" == "macOS" ]]; then
-            GODOT_BIN="godot/Godot${{ matrix.godot_binary_suffix }}"
-          else
-            GODOT_BIN="godot/Godot_v${{ env.GODOT_VERSION }}${{ matrix.godot_binary_suffix }}"
-          fi
-          $GODOT_BIN --headless ${{ matrix.extra_args }} --export-release "${{ matrix.platform }}" ${{ matrix.export_name }}
+          godot/${{ matrix.godot_binary }} --headless ${{ matrix.extra_args }} --export-release "${{ matrix.platform }}" ${{ matrix.export_name }}
 
       - name: Wait for export completion
         if: matrix.needs_sleep
@@ -118,28 +114,42 @@ jobs:
         with:
           lfs: true
 
+      - name: Cache Godot and Templates (Web)
+        uses: actions/cache@v4
+        with:
+          path: |
+            godot
+            ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
+          key: web-godot-${{ env.GODOT_VERSION }}
+
       - name: Download Godot
+        shell: bash
         run: |
-          GODOT_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64.zip"
-          curl -L -o godot.zip "$GODOT_URL"
-          unzip godot.zip -d godot
+          if [ ! -f "godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64" ]; then
+            curl -L -o godot.zip "${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64.zip"
+            unzip godot.zip -d godot
+          fi
           chmod +x godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64
 
       - name: Download Export Templates
+        shell: bash
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
-          TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
-          curl -L -o templates.zip "$TEMPLATES_URL"
-          unzip templates.zip -d .
-          mv templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}/
-          ls ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}/
+          TEMPLATE_DIR=~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
+          if [ ! -d "$TEMPLATE_DIR" ]; then
+            mkdir -p "$TEMPLATE_DIR"
+            curl -L -o templates.zip "${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
+            unzip templates.zip -d .
+            mv templates/* "$TEMPLATE_DIR/"
+          fi
 
       - name: Export project
+        shell: bash
         run: |
           mkdir -p build/web
           godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64 --headless --export-release "Web" build/web/index
 
       - name: Replace variables in exported HTML
+        shell: bash
         run: |
           sed -i 's/\$GODOT_PROJECT_NAME/my-rts-game-godot/g' build/web/index.html
           sed -i 's/\$GODOT_SPLASH_COLOR/#242424/g' build/web/index.html
