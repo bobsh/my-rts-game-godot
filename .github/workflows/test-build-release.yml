@@ -91,7 +91,11 @@ jobs:
       - name: Export project
         shell: bash
         run: |
-          GODOT_BINARY="Godot_v${GODOT_VERSION}${{ matrix.godot_binary_suffix }}"
+          if [[ "${{ matrix.platform }}" == "macOS" ]]; then
+            GODOT_BINARY="Godot.app/Contents/MacOS/Godot"
+          else
+            GODOT_BINARY="Godot_v${GODOT_VERSION}${{ matrix.godot_binary_suffix }}"
+          fi
           godot/$GODOT_BINARY --headless ${{ matrix.extra_args }} --export-release "${{ matrix.platform }}" ${{ matrix.export_name }}
 
       - name: Wait for export completion
