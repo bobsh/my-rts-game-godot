@@ -35,7 +35,7 @@ jobs:
 
           - platform: Linux-x86_64
             os: ubuntu-latest
-            godot_binary: "_linux.x86_64"
+            godot_binary_suffix: "_linux.x86_64"
             godot_archive_suffix: "_linux.x86_64.zip"
             template_path: "${HOME}/.local/share/godot/export_templates/"
             export_name: game.x86_64
@@ -91,7 +91,8 @@ jobs:
       - name: Export project
         shell: bash
         run: |
-          godot/${{ matrix.godot_binary }} --headless ${{ matrix.extra_args }} --export-release "${{ matrix.platform }}" ${{ matrix.export_name }}
+          GODOT_BINARY="Godot_v${GODOT_VERSION}${{ matrix.godot_binary_suffix }}"
+          godot/$GODOT_BINARY --headless ${{ matrix.extra_args }} --export-release "${{ matrix.platform }}" ${{ matrix.export_name }}
 
       - name: Wait for export completion
         if: matrix.needs_sleep
