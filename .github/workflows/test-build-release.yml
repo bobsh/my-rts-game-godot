@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
@@ -16,17 +14,44 @@ permissions:
 env:
   GODOT_VERSION: "4.5-beta1"
   GODOT_VERSION_ALT: "4.5.beta1"
-  GODOT_DOWNLOAD_INDEX_URL: "https://godotengine.org/download/archive/4.5-beta1/"
-  GODOT_WINDOWS_URL: "https://github.com/godotengine/godot-builds/releases/download/4.5-beta1/Godot_v4.5-beta1_win64.exe.zip"
-  GODOT_TEMPLATES_URL: "https://github.com/godotengine/godot-builds/releases/download/4.5-beta1/Godot_v4.5-beta1_export_templates.tpz"
-  GODOT_LINUX_URL: "https://github.com/godotengine/godot-builds/releases/download/4.5-beta1/Godot_v4.5-beta1_linux.x86_64.zip"
-  GODOT_MACOS_URL: "https://github.com/godotengine/godot-builds/releases/download/4.5-beta1/Godot_v4.5-beta1_macos.universal.zip"
-
+  GODOT_BASE_URL: "https://github.com/godotengine/godot-builds/releases/download"
 
 jobs:
-  build-windows-x86_64:
-    name: Build for Windows x86_64
-    runs-on: windows-latest
+  build:
+    name: Build for ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - platform: Windows-x86_64
+            os: windows-latest
+            godot_binary_suffix: "_win64.exe"
+            godot_archive_suffix: "_win64.exe.zip"
+            template_path: ~/AppData/Roaming/Godot/export_templates/
+            export_name: game.exe
+            artifact_name: windows-build-x64_64
+            needs_sleep: true
+            extra_args: "--no-window --verbose"
+
+          - platform: Linux-x86_64
+            os: ubuntu-latest
+            godot_binary_suffix: "_linux.x86_64"
+            godot_archive_suffix: "_linux.x86_64.zip"
+            template_path: ~/.local/share/godot/export_templates/
+            export_name: game.x86_64
+            artifact_name: linux-build-x64_64
+            needs_sleep: false
+            extra_args: ""
+
+          - platform: macOS
+            os: macos-latest
+            godot_binary_suffix: ".app/Contents/MacOS/Godot"
+            godot_archive_suffix: "_macos.universal.zip"
+            template_path: "/Users/runner/Library/Application Support/Godot/export_templates/"
+            export_name: game.dmg
+            artifact_name: macos-build
+            needs_sleep: false
+            extra_args: ""
 
     steps:
       - name: Checkout repository
@@ -36,98 +61,47 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip ${{ env.GODOT_WINDOWS_URL }}
+          GODOT_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}${{ matrix.godot_archive_suffix }}"
+          curl -L -o godot.zip "$GODOT_URL"
           unzip godot.zip -d godot
           ls godot
 
-      - name: Download Export Templates
+      - name: Make Godot executable
+        if: runner.os != 'Windows'
         run: |
-          mkdir -p ~/AppData/Roaming/Godot/export_templates/
-          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
-          unzip templates.zip -d .
-          mv templates ~/AppData/Roaming/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}
-          ls ~/AppData/Roaming/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}
-
-      - name: Export project
-        # The godot command runs in the background, so we need to wait for it to finish
-        # before proceeding to the next step.
-        run: |
-          godot/Godot_v${{ env.GODOT_VERSION }}_win64.exe --no-window --headless --verbose --export-release "Windows-x86_64" game.exe
-          sleep 120
-
-      - name: Upload Windows build
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build-x64_64
-          path: game.exe
-
-  build-linux-x86_64:
-    name: Build for Linux x86_64
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Download Godot
-        run: |
-          curl -L -o godot.zip ${{ env.GODOT_LINUX_URL }}
-          unzip godot.zip -d godot
-          chmod +x godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64
+          if [[ "${{ matrix.platform }}" == "macOS" ]]; then
+            chmod +x godot/Godot${{ matrix.godot_binary_suffix }}
+          else
+            chmod +x godot/Godot_v${{ env.GODOT_VERSION }}${{ matrix.godot_binary_suffix }}
+          fi
 
       - name: Download Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/
-          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
+          mkdir -p "${{ matrix.template_path }}"
+          TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
+          curl -L -o templates.zip "$TEMPLATES_URL"
           unzip templates.zip -d .
-          mv templates ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
+          mv templates "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
+          ls "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
 
       - name: Export project
         run: |
-          godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64 --headless --export-release "Linux-x86_64" game.x86_64
+          if [[ "${{ matrix.platform }}" == "macOS" ]]; then
+            GODOT_BIN="godot/Godot${{ matrix.godot_binary_suffix }}"
+          else
+            GODOT_BIN="godot/Godot_v${{ env.GODOT_VERSION }}${{ matrix.godot_binary_suffix }}"
+          fi
+          $GODOT_BIN --headless ${{ matrix.extra_args }} --export-release "${{ matrix.platform }}" ${{ matrix.export_name }}
 
-      - name: Upload Linux build
+      - name: Wait for export completion
+        if: matrix.needs_sleep
+        run: sleep 120
+
+      - name: Upload build
         uses: actions/upload-artifact@v4
         with:
-          name: linux-build-x64_64
-          path: game.x86_64
-
-  build-macos:
-    name: Build for macOS
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Download Godot
-        run: |
-          curl -L -o godot.zip ${{ env.GODOT_MACOS_URL }}
-          unzip godot.zip -d godot
-          chmod +x godot/Godot.app/Contents/MacOS/Godot
-
-      - name: Download Export Templates
-        run: |
-          ls -d ~
-          mkdir -p "/Users/runner/Library/Application Support/Godot/export_templates/"
-          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
-          unzip templates.zip -d .
-          mv templates "/Users/runner/Library/Application Support/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}"
-          ls "/Users/runner/Library/Application Support/Godot/export_templates/${{ env.GODOT_VERSION_ALT }}"
-
-      - name: Export project
-        run: |
-          godot/Godot.app/Contents/MacOS/Godot --headless --export-release "macOS" game.dmg
-
-      - name: Upload macOS build
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-build
-          path: game.dmg
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.export_name }}
 
   build-web:
     name: Build for Web
@@ -141,14 +115,16 @@ jobs:
 
       - name: Download Godot
         run: |
-          curl -L -o godot.zip ${{ env.GODOT_LINUX_URL }}
+          GODOT_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64.zip"
+          curl -L -o godot.zip "$GODOT_URL"
           unzip godot.zip -d godot
           chmod +x godot/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64
 
       - name: Download Export Templates
         run: |
           mkdir -p ~/.local/share/godot/export_templates/
-          curl -L -o templates.zip ${{ env.GODOT_TEMPLATES_URL }}
+          TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
+          curl -L -o templates.zip "$TEMPLATES_URL"
           unzip templates.zip -d .
           mv templates ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
           ls ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
