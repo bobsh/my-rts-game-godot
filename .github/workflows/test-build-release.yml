@@ -27,7 +27,7 @@ jobs:
             os: windows-latest
             godot_binary_suffix: "_win64.exe"
             godot_archive_suffix: "_win64.exe.zip"
-            template_path: ~/AppData/Roaming/Godot/export_templates/
+            template_path: "${APPDATA}/Godot/export_templates/"
             export_name: game.exe
             artifact_name: windows-build-x64_64
             needs_sleep: true
