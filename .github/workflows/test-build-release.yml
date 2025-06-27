@@ -80,7 +80,7 @@ jobs:
       - name: Download Export Templates
         shell: bash
         run: |
-          mkdir -p "${{ matrix.template_path }}"
+          mkdir -p "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
           TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
           curl -L -o templates.zip "$TEMPLATES_URL"
           unzip templates.zip -d .
@@ -127,7 +127,7 @@ jobs:
 
       - name: Download Export Templates
         run: |
-          mkdir -p ~/.local/share/godot/export_templates/
+          mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
           TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
           curl -L -o templates.zip "$TEMPLATES_URL"
           unzip templates.zip -d .
