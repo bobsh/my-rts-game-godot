@@ -84,8 +84,8 @@ jobs:
           TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
           curl -L -o templates.zip "$TEMPLATES_URL"
           unzip templates.zip -d .
-          mv templates "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
-          ls "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}"
+          mv templates/* "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}/"
+          ls "${{ matrix.template_path }}${{ env.GODOT_VERSION_ALT }}/"
 
       - name: Export project
         shell: bash
@@ -131,8 +131,8 @@ jobs:
           TEMPLATES_URL="${{ env.GODOT_BASE_URL }}/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz"
           curl -L -o templates.zip "$TEMPLATES_URL"
           unzip templates.zip -d .
-          mv templates ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
-          ls ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}
+          mv templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}/
+          ls ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION_ALT }}/
 
       - name: Export project
         run: |
