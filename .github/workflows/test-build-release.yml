@@ -37,7 +37,7 @@ jobs:
             os: ubuntu-latest
             godot_binary_suffix: "_linux.x86_64"
             godot_archive_suffix: "_linux.x86_64.zip"
-            template_path: ~/.local/share/godot/export_templates/
+            template_path: "${HOME}/.local/share/godot/export_templates/"
             export_name: game.x86_64
             artifact_name: linux-build-x64_64
             needs_sleep: false
