@@ -21,6 +21,10 @@ config/icon="uid://dpvld82rrho7x"
 window/size/mode=4
 mouse_cursor/custom_image="uid://c58d6jivgpgah"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gamedev_assistant/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
