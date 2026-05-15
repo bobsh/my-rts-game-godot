@@ -104,7 +104,7 @@ jobs:
         run: sleep 120
 
       - name: Upload build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.export_name }}
